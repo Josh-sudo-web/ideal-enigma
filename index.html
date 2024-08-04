@@ -8,20 +8,10 @@
         body {
             font-family: Arial, sans-serif;
         }
-        #meta-tags {
-            background-color: #f0f0f0;
-            padding: 20px;
-            border: 1px solid #ddd;
-        }
-        #meta-tags meta {
-            display: block;
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 <body>
     <h1>Meta Tag Generator</h1>
-    <div id="meta-tags"></div>
     <script>
         // Get URL parameters
         const urlParams = new URLSearchParams(window.location.search);
@@ -34,23 +24,41 @@
         const redirect = urlParams.get('redirect');
         
         // Create meta tags
-        const metaTags = `
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${title}</title>
-            <meta name="description" content="${description}">
-            <meta name="author" content="${author}">
-            <meta property="og:title" content="${title}">
-            <meta property="og:description" content="${description}">
-            <meta property="og:image" content="${image}">
-            <meta property="twitter:title" content="${title}">
-            <meta property="twitter:description" content="${description}">
-            <meta property="twitter:image" content="${image}">
-            <meta http-equiv="refresh" content="100; url=${redirect}">
-        `;
+        const metaTags = [
+            { name: 'title', content: title },
+            { name: 'description', content: description },
+            { name: 'author', content: author },
+            { property: 'og:title', content: title },
+            { property: 'og:description', content: description },
+            { property: 'og:image', content: image },
+            { property: 'twitter:title', content: title },
+            { property: 'twitter:description', content: description },
+            { property: 'twitter:image', content: image },
+        ];
         
-        // Display meta tags
-        document.getElementById('meta-tags').innerHTML = metaTags;
+        // Remove existing meta tags
+        document.querySelectorAll('meta').forEach(meta => meta.remove());
+        
+        // Add new meta tags
+        metaTags.forEach(meta => {
+            const metaTag = document.createElement('meta');
+            if (meta.name) {
+                metaTag.name = meta.name;
+            } else if (meta.property) {
+                metaTag.property = meta.property;
+            }
+            metaTag.content = meta.content;
+            document.head.appendChild(metaTag);
+        });
+        
+        // Add redirect meta tag
+        const redirectMetaTag = document.createElement('meta');
+        redirectMetaTag.httpEquiv = 'refresh';
+        redirectMetaTag.content = `0; url=${redirect}`;
+        document.head.appendChild(redirectMetaTag);
+        
+        // Update title
+        document.title = title;
     </script>
 </body>
 </html>
