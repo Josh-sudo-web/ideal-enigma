@@ -1,55 +1,106 @@
+
+
+Verify
+
+Open In Editor
+Edit
+Run
+Copy code
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="meta-title">Dynamic Meta Tags Example</title>
-    <meta name="description" id="meta-description" content="This is a default description.">
-    <meta name="keywords" id="meta-keywords" content="default keywords">
+    <title>Rauf's Embed Generator</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        .input-field {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0069d9;
         }
     </style>
 </head>
 <body>
-    <h1>Dynamic Meta Tags Example</h1>
-    <form id="meta-form">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title"><br><br>
-        <label for="description">Description:</label>
-        <textarea id="description" name="description"></textarea><br><br>
-        <label for="keywords">Keywords:</label>
-        <input type="text" id="keywords" name="keywords"><br><br>
-        <input type="submit" value="Update Meta Tags">
-    </form>
+    <div class="container">
+        <h1>Rauf's Embed Generator</h1>
 
-    <script>
-        document.getElementById('meta-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission behavior
+        <p>This tool is <strong>Use At Your Own Risk</strong> and I am not responsible for what happens by you using it.</p>
 
-            // Get the user input values
-            var title = document.getElementById('title').value;
-            var description = document.getElementById('description').value;
-            var keywords = document.getElementById('keywords').value;
+        <div class="input-field">
+            <label for="domain">Domain:</label>
+            <input type="text" id="domain" value="https://embed.rauf.workers.dev/">
+        </div>
 
-            // Send a POST request to the server with the updated meta tags
-            fetch('/update-meta-tags', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    title: title,
-                    description: description,
-                    keywords: keywords
-                })
-            })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error(error));
-        });
-    </script>
+        <div class="input-field">
+            <label for="author-text">Author Text:</label>
+            <input type="text" id="author-text" placeholder="Author Text...">
+        </div>
+
+        <div class="input-field">
+            <label for="title-text">Title Text:</label>
+            <input type="text" id="title-text" placeholder="Title Text...">
+        </div>
+
+        <div class="input-field">
+            <label for="description">Description:</label>
+            <textarea id="description" placeholder="Description..."></textarea>
+        </div>
+
+        <div class="input-field">
+            <label for="sidebar-color">Sidebar Color:</label>
+            <input type="color" id="sidebar-color">
+        </div>
+
+        <div class="input-field">
+            <label for="image-url">Image URL:</label>
+            <input type="text" id="image-url" placeholder="Image URL...">
+        </div>
+
+        <div class="input-field">
+            <label for="redirect-url">Redirect URL:</label>
+            <input type="text" id="redirect-url" placeholder="Redirect URL...">
+        </div>
+
+        <button class="button">Generate</button>
+    </div>
 </body>
 </html>
