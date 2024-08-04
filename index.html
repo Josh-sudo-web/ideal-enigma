@@ -1,106 +1,100 @@
-
-
-Verify
-
-Open In Editor
-Edit
-Run
-Copy code
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rauf's Embed Generator</title>
+    <title>Dynamic HTML Generator</title>
     <style>
         body {
             font-family: sans-serif;
             margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 400px;
             padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        h1 {
-            text-align: center;
-        }
-        
-        .input-field {
-            margin-bottom: 15px;
-        }
-        
+
         label {
-            display: block;
             margin-bottom: 5px;
         }
-        
-        input, textarea {
-            width: 100%;
+
+        input[type="text"],
+        textarea {
             padding: 10px;
+            margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            box-sizing: border-box;
         }
-        
-        .button {
-            background-color: #007bff;
-            color: white;
+
+        button {
             padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
-
-        .button:hover {
-            background-color: #0069d9;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Rauf's Embed Generator</h1>
+    <h1>Dynamic HTML Generator</h1>
+    <form id="htmlForm">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" placeholder="Enter title">
 
-        <p>This tool is <strong>Use At Your Own Risk</strong> and I am not responsible for what happens by you using it.</p>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" placeholder="Enter description"></textarea>
 
-        <div class="input-field">
-            <label for="domain">Domain:</label>
-            <input type="text" id="domain" value="https://embed.rauf.workers.dev/">
-        </div>
+        <button type="submit">Generate HTML</button>
+    </form>
 
-        <div class="input-field">
-            <label for="author-text">Author Text:</label>
-            <input type="text" id="author-text" placeholder="Author Text...">
-        </div>
+    <script>
+        const htmlForm = document.getElementById("htmlForm");
 
-        <div class="input-field">
-            <label for="title-text">Title Text:</label>
-            <input type="text" id="title-text" placeholder="Title Text...">
-        </div>
+        htmlForm.addEventListener("submit", (event) => {
+            event.preventDefault();
 
-        <div class="input-field">
-            <label for="description">Description:</label>
-            <textarea id="description" placeholder="Description..."></textarea>
-        </div>
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
 
-        <div class="input-field">
-            <label for="sidebar-color">Sidebar Color:</label>
-            <input type="color" id="sidebar-color">
-        </div>
+            const newHtml = `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>${title}</title>
+                    <meta name="description" content="${description}">
+                </head>
+                <body>
+                    <h1>${title}</h1>
+                    <p>${description}</p>
+                </body>
+                </html>
+            `;
 
-        <div class="input-field">
-            <label for="image-url">Image URL:</label>
-            <input type="text" id="image-url" placeholder="Image URL...">
-        </div>
+            // Create a Blob object containing the new HTML
+            const blob = new Blob([newHtml], { type: 'text/html' });
 
-        <div class="input-field">
-            <label for="redirect-url">Redirect URL:</label>
-            <input type="text" id="redirect-url" placeholder="Redirect URL...">
-        </div>
+            // Create a URL for the Blob object
+            const url = URL.createObjectURL(blob);
 
-        <button class="button">Generate</button>
-    </div>
+            // Open a new window with the generated HTML
+            window.open(url, '_blank');
+        });
+    </script>
 </body>
 </html>
