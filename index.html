@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="meta-title">Dynamic Meta Tags Example</title>
+    <meta name="description" id="meta-description" content="This is a default description.">
+    <meta name="keywords" id="meta-keywords" content="default keywords">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dynamic Meta Tags Example</h1>
+    <form id="meta-form">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title"><br><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea><br><br>
+        <label for="keywords">Keywords:</label>
+        <input type="text" id="keywords" name="keywords"><br><br>
+        <input type="submit" value="Update Meta Tags">
+    </form>
+
+    <script>
+        document.getElementById('meta-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            // Get the user input values
+            var title = document.getElementById('title').value;
+            var description = document.getElementById('description').value;
+            var keywords = document.getElementById('keywords').value;
+
+            // Send a POST request to the server with the updated meta tags
+            fetch('/update-meta-tags', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: title,
+                    description: description,
+                    keywords: keywords
+                })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
+        });
+    </script>
+</body>
+</html>
